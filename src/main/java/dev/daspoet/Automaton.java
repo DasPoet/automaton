@@ -7,19 +7,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 @Getter
-public class Automate {
+public class Automaton {
 
-    private final State initialState; // initial State of the Automate
+    private final State initialState; // initial State of the Automaton
 
     /*
-    Automate constructs a new Automate wrapping its initial State.
+    Automaton constructs a new Automaton wrapping its initial State.
      */
-    public Automate(State initialState) {
+    public Automaton(State initialState) {
         this.initialState = initialState;
     }
 
     /*
-    canAccept returns whether the given word is accepted by the Automate.
+    canAccept returns whether the given word is accepted by the Automaton.
      */
     public boolean canAccept(String word) {
         Iterator<Integer> iter = this.charIter(word);
