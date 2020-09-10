@@ -1,4 +1,4 @@
-package dev.daspoet;
+package dev.daspoet.automaton;
 
 import lombok.Getter;
 

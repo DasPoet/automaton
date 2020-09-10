@@ -1,9 +1,8 @@
-package dev.daspoet;
+package dev.daspoet.automaton;
 
 import lombok.Getter;
 
 import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 @Getter
