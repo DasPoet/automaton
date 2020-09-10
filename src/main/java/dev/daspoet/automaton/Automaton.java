@@ -2,7 +2,8 @@ package dev.daspoet.automaton;
 
 import lombok.Getter;
 
-import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class Automaton {
@@ -20,14 +21,15 @@ public class Automaton {
     canAccept returns whether the given word is accepted by the Automaton.
      */
     public boolean canAccept(String word) {
-        Iterator<Integer> iter = this.charIter(word);
+        IterableList<Character> iter = this.charIterable(word);
         return this.initialState.traverse(iter);
     }
 
     /*
     charIter constructs an Iterator from a given string and returns it.
      */
-    private Iterator<Integer> charIter(String word) {
-        return word.chars().iterator();
+    private IterableList<Character> charIterable(String word) {
+        List<Character> collectedWord = word.chars().mapToObj(it -> (char) it).collect(Collectors.toList());
+        return new IterableList<>(collectedWord);
     }
 }
