@@ -3,7 +3,6 @@ package dev.daspoet.automaton;
 import lombok.Getter;
 
 import java.util.Iterator;
-import java.util.stream.IntStream;
 
 @Getter
 public class Automaton {
@@ -26,10 +25,9 @@ public class Automaton {
     }
 
     /*
-    charIter constructs an Iterator from a given word and returns it.
+    charIter constructs an Iterator from a given string and returns it.
      */
     private Iterator<Integer> charIter(String word) {
-        IntStream separatedWord = word.chars();
-        return separatedWord.iterator();
+        return word.chars().iterator();
     }
 }
