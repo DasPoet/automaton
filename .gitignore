@@ -24,6 +24,7 @@ hs_err_pid*
 
 # JetBrains
 .idea
+/.editorconfig
 
 # Gradle
 build
