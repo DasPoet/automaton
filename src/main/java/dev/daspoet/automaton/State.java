@@ -9,42 +9,71 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Getter
 public class State {
 
-    private final List<Transition> transitions; // outgoing links to successive States
+    private final List<Transition> transitions; // outgoing links to successive states
 
-    /*
-    State constructs a new State from a List of accepted inputs and a variadic number of successive States and returns it.
-     */
+
     public State(Transition... transitions) {
         this.transitions = Arrays.asList(transitions);
     }
 
-    /*
-    traverse TODO write comment
+    /**
+     * Wrapper
+     *
+     * @param input the word to check
+     * @return whether the traversal was successful
+     * @see State#traverse(List, int)
      */
-    public boolean traverse(IterableList<Character> input) {
+    public boolean traverse(List<Character> input) {
+        return this.traverse(input, 0);
+    }
 
-        if (!input.hasNext()) {
+    /**
+     * Traverses the transitions recursively to find any combination of accepted characters
+     * that match the remaining input
+     * <p>
+     * A traversal is considered to be successful if there is a combination of successive
+     * transitions that accept the remaining input.
+     *
+     * @param input        the input
+     * @param currentIndex the current position in the input
+     * @return whether the traversal was successful
+     */
+    public boolean traverse(List<Character> input, int currentIndex) {
+        if (!this.hasNext()) {
+            return !this.inputHasNext(input, currentIndex);
+        }
+
+        if (!this.inputHasNext(input, currentIndex)) {
             return !this.hasNext();
         }
 
-        if (!this.hasNext()) {
-            return !input.hasNext();
-        }
-
         AtomicBoolean success = new AtomicBoolean();
-        char next = input.next();
+        char next = input.get(currentIndex);
 
         this.transitions.forEach(it -> {
             if (it.canTraverse(next)) {
-                success.set(it.forward(input.clone()));
+                success.set(it.forward(input, currentIndex + 1));
             }
         });
 
         return success.get();
     }
 
-    /*
-    hasNext returns whether the State has any successive States.
+    /**
+     * Checks if one more character can be obtained from the input
+     *
+     * @param input        the input
+     * @param currentIndex the current position in the input
+     * @return whether the iteration over the input must be terminated
+     */
+    private boolean inputHasNext(List<Character> input, int currentIndex) {
+        return currentIndex <= input.size() - 1;
+    }
+
+    /**
+     * Checks if the state has any successive states
+     *
+     * @return whether there are any successive states
      */
     private boolean hasNext() {
         return !(this.transitions == null || this.transitions.size() == 0 || this.transitions.get(0) == null);

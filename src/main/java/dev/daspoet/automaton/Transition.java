@@ -9,20 +9,35 @@ import java.util.Objects;
 @Getter
 public class Transition {
 
-    private final State nextState;
-    private final List<Character> acceptedChars;
+    private final State nextState; // then next state
+    private final List<Character> acceptedChars; // accepted characters
 
     public Transition(State nextState, Character... acceptedChars) {
         Objects.requireNonNull(nextState);
+
         this.nextState = nextState;
         this.acceptedChars = Arrays.asList(acceptedChars);
     }
 
+    /**
+     * Checks if a given character is part of the accepted chars
+     *
+     * @param character the character to check
+     * @return whether the character is accepted
+     * @see Transition#acceptedChars
+     */
     public boolean canTraverse(char character) {
         return this.acceptedChars.contains(character);
     }
 
-    public boolean forward(IterableList<Character> input) {
-        return this.nextState.traverse(input);
+    /**
+     * Checks if the input is acceptable to the next state
+     *
+     * @param input        List of characters
+     * @param currentIndex the current position in the input
+     * @return whether the next State accepts the input.
+     */
+    public boolean forward(List<Character> input, int currentIndex) {
+        return this.nextState.traverse(input, currentIndex);
     }
 }

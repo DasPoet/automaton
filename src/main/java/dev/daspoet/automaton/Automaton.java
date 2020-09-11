@@ -8,28 +8,29 @@ import java.util.stream.Collectors;
 @Getter
 public class Automaton {
 
-    private final State initialState; // initial State of the Automaton
+    private final State initialState; // initial State
 
-    /*
-    Automaton constructs a new Automaton wrapping its initial State.
+    /**
+     * Wrapper for validating inputs on a chain of states
+     *
+     * @param initialState initial state
+     * @see State
      */
     public Automaton(State initialState) {
         this.initialState = initialState;
     }
 
-    /*
-    canAccept returns whether the given word is accepted by the Automaton.
+    /**
+     * Checks if a given word is accepted by the automaton
+     * <p>
+     * All successive states of the automaton's initial state are traversed recursively
+     * to check whether any of the emerging chains accepts the given word.
+     *
+     * @param word the word to check
+     * @return whether the automaton accepts the word
      */
     public boolean canAccept(String word) {
-        IterableList<Character> iter = this.charIterable(word);
-        return this.initialState.traverse(iter);
-    }
-
-    /*
-    charIter constructs an Iterator from a given string and returns it.
-     */
-    private IterableList<Character> charIterable(String word) {
-        List<Character> collectedWord = word.chars().mapToObj(it -> (char) it).collect(Collectors.toList());
-        return new IterableList<>(collectedWord);
+        List<Character> chars = word.chars().mapToObj(it -> (char) it).collect(Collectors.toList());
+        return this.initialState.traverse(chars);
     }
 }
