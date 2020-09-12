@@ -17,12 +17,25 @@ public class State {
         this.transitions = new LinkedList<>(Arrays.asList(transitions));
     }
 
+    /**
+     * Adds a loop to the state itself, accepting a variadic number of characters
+     *
+     * @param acceptedChars the accepted characters
+     */
     public void addSelfReference(Character... acceptedChars) {
-        List<Transition> newReferences = new LinkedList<>();
+        List<Transition> newTransitions = new LinkedList<>();
 
-        this.transitions.forEach(it -> newReferences.add(new Transition(new State(new Transition(this, acceptedChars), it), acceptedChars)));
+        this.transitions.forEach(it -> {
+            Transition extending = new Transition(this, acceptedChars);
 
-        this.transitions.addAll(newReferences);
+            State transitional = new State(extending, it);
+
+            Transition outgoing = new Transition(transitional, acceptedChars);
+
+            newTransitions.add(outgoing);
+        });
+
+        this.transitions.addAll(newTransitions);
     }
 
     /**
