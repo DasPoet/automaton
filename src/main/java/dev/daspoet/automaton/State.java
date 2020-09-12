@@ -3,6 +3,7 @@ package dev.daspoet.automaton;
 import lombok.Getter;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -13,7 +14,15 @@ public class State {
 
 
     public State(Transition... transitions) {
-        this.transitions = Arrays.asList(transitions);
+        this.transitions = new LinkedList<>(Arrays.asList(transitions));
+    }
+
+    public void addSelfReference(Character... acceptedChars) {
+        List<Transition> newReferences = new LinkedList<>();
+
+        this.transitions.forEach(it -> newReferences.add(new Transition(new State(new Transition(this, acceptedChars), it), acceptedChars)));
+
+        this.transitions.addAll(newReferences);
     }
 
     /**
