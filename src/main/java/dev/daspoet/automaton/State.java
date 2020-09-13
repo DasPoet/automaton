@@ -26,6 +26,24 @@ public class State {
     }
 
     /**
+     * Adds one transition to the state
+     *
+     * @param transition the transition to add
+     */
+    public void addTransition(Transition transition) {
+        this.transitions.add(transition);
+    }
+
+    /**
+     * Adds a variadic number of transitions to the state
+     *
+     * @param transitions the transitions to add
+     */
+    public void addTransitions(Transition... transitions) {
+        this.transitions.addAll(Arrays.asList(transitions));
+    }
+
+    /**
      * Wrapper
      *
      * @param input the word to check
