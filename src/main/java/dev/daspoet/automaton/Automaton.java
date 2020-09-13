@@ -1,24 +1,18 @@
 package dev.daspoet.automaton;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
+@AllArgsConstructor
 public class Automaton {
 
-    private final State initialState; // initial State
-
-    /**
-     * Wrapper for validating inputs on a chain of states
-     *
-     * @param initialState initial state
-     * @see State
-     */
-    public Automaton(State initialState) {
-        this.initialState = initialState;
-    }
+    @NonNull
+    private final State initialState;
 
     /**
      * Checks if a given word is accepted by the automaton
