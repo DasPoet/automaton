@@ -12,7 +12,6 @@ public class State {
 
     private final List<Transition> transitions; // outgoing links to successive states
 
-
     public State(Transition... transitions) {
         this.transitions = new LinkedList<>(Arrays.asList(transitions));
     }
@@ -23,19 +22,7 @@ public class State {
      * @param acceptedChars the accepted characters
      */
     public void addSelfReference(Character... acceptedChars) {
-        List<Transition> newTransitions = new LinkedList<>();
-
-        this.transitions.forEach(it -> {
-            Transition extending = new Transition(this, acceptedChars);
-
-            State transitional = new State(extending, it);
-
-            Transition outgoing = new Transition(transitional, acceptedChars);
-
-            newTransitions.add(outgoing);
-        });
-
-        this.transitions.addAll(newTransitions);
+        this.transitions.add(new Transition(this, acceptedChars));
     }
 
     /**
