@@ -9,7 +9,7 @@ Let's go ahead and create a simple [Automaton](https://github.com/informatik-q2/
 First, let's define the [States](https://github.com/informatik-q2/automaton/blob/master/src/main/java/dev/daspoet/automaton/State.java) of our [Automaton](https://github.com/informatik-q2/automaton/blob/master/src/main/java/dev/daspoet/automaton/Automaton.java).
 
 ```Java
-State qFinal = new State((Transition) null);
+State qFinal = new State();
 
 State q2 = new State(new Transition(qFinal, '0'));
 State q1 = new State(new Transition(qFinal, '1'));
